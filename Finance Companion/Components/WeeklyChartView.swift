@@ -101,8 +101,8 @@ struct WeeklyChartView: View {
                         // Amount label (only for non-zero current)
                         if item.amount > 0 {
                             Text(item.amount.shortFormatted)
-                                .font(.system(size: 10, weight: .medium, design: .rounded))
-                                .foregroundStyle(.secondary)
+                                .font(.system(size: 10, weight: item.isToday ? .bold : .medium, design: .rounded))
+                                .foregroundStyle(item.isToday ? Color(hex: "6366F1") : .secondary)
                         } else {
                             Text(" ")
                                 .font(.system(size: 10))
@@ -121,12 +121,28 @@ struct WeeklyChartView: View {
                                 .frame(width: 12, height: appeared ? barHeight(for: item.amount) : 4)
                         }
 
-                        // Day label
-                        Text(item.day)
-                            .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundStyle(.secondary)
+                        // Day label — bold + accented for today
+                        VStack(spacing: 2) {
+                            Text(item.isToday ? "Today" : item.day)
+                                .font(.system(size: item.isToday ? 10 : 11, weight: item.isToday ? .bold : .medium, design: .rounded))
+                                .foregroundStyle(item.isToday ? Color(hex: "6366F1") : .secondary)
+
+                            // Today indicator dot
+                            if item.isToday {
+                                Circle()
+                                    .fill(Color(hex: "6366F1"))
+                                    .frame(width: 4, height: 4)
+                            }
+                        }
                     }
                     .frame(maxWidth: .infinity)
+                    .padding(.vertical, item.isToday ? 4 : 0)
+                    .background(
+                        item.isToday
+                            ? RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(Color(hex: "6366F1").opacity(0.06))
+                            : nil
+                    )
                 }
             }
             .frame(height: 160)
@@ -255,7 +271,7 @@ struct WeeklyChartView: View {
             .init(day: "Thu", amount: 3100, previousAmount: 2200),
             .init(day: "Fri", amount: 1800, previousAmount: 2000),
             .init(day: "Sat", amount: 4750, previousAmount: 250),
-            .init(day: "Sun", amount: 1650, previousAmount: 4150),
+            .init(day: "Sun", amount: 1650, previousAmount: 4150, isToday: true),
         ],
         insight: "Reduced spending by 12% 👏",
         isPositiveTrend: true,
@@ -269,7 +285,7 @@ struct WeeklyChartView: View {
         data: [
             .init(day: "Mon", amount: 300,  previousAmount: 0),
             .init(day: "Tue", amount: 1000, previousAmount: 0),
-            .init(day: "Wed", amount: 600,  previousAmount: 0),
+            .init(day: "Wed", amount: 600,  previousAmount: 0, isToday: true),
         ],
         insight: "",
         isPositiveTrend: true,

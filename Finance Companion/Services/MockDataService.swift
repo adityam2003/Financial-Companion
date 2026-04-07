@@ -114,7 +114,7 @@ struct MockDataService {
 
     // MARK: - No-Spend Streak
 
-    /// Number of consecutive days (ending yesterday) with zero expenses.
+    /// Number of consecutive days (including today if no expenses yet) with zero expenses.
     static func noSpendStreak(from transactions: [Transaction]) -> Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: .now)
@@ -126,7 +126,7 @@ struct MockDataService {
         )
 
         var streak = 0
-        var checkDate = calendar.date(byAdding: .day, value: -1, to: today)!
+        var checkDate = today   // start from today
 
         while !expenseDays.contains(checkDate) {
             streak += 1

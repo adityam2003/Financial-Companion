@@ -152,7 +152,7 @@ final class HomeViewModel {
                 .filter { $0.type == .expense && calendar.isDate($0.date, inSameDayAs: previousDay) }
                 .reduce(0) { $0 + $1.amount }
 
-            return DailySpending(day: label, amount: currentTotal, previousAmount: previousTotal)
+            return DailySpending(day: label, amount: currentTotal, previousAmount: previousTotal, isToday: daysAgo == 0)
         }
     }
 

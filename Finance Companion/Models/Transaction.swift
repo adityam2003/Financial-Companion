@@ -91,4 +91,5 @@ struct DailySpending: Identifiable {
     let day: String           // e.g. "Mon"
     let amount: Double        // current week
     var previousAmount: Double = 0  // previous week (for comparison)
+    var isToday: Bool = false       // highlights today's bar in the chart
 }
