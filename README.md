@@ -96,4 +96,9 @@ The app follows a **MVVM + Store pattern**:
 
 ## 📸 Screenshots
 
-> Add your screenshots here
+<p align="center">
+  <img src="media/1.png" width="22%" />
+  <img src="media/2.png" width="22%" />
+  <img src="media/3.png" width="22%" />
+  <img src="media/4.png" width="22%" />
+</p>
